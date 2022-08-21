@@ -15,7 +15,7 @@ impl ConsoleLogger {
 }
 
 impl crate::Logger for ConsoleLogger {
-    fn log_normal(&self, msg: &str) {
+    fn log_info(&self, msg: &str) {
         println!("{}", msg);
     }
 
