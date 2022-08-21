@@ -32,14 +32,14 @@ mod console;
 
 static mut THELOGGER: Option<Box<dyn Logger>> = None;
 
-pub fn init() {
+pub fn log_init() {
     let clogger = console::ConsoleLogger::new();
     unsafe {
         THELOGGER = Some(Box::new(clogger));
     }
 }
 
-pub fn logi(msg: &str) {
+pub fn log_i(msg: &str) {
     unsafe {
         if THELOGGER.is_none() {
             panic!("ERRR:LoggerK:Direct helper logi called before init");
@@ -49,28 +49,28 @@ pub fn logi(msg: &str) {
     }
 }
 
-pub fn loge(msg: &str) {
+pub fn log_e(msg: &str) {
     unsafe {
         let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper loge called before init");
         oklogger.log_error(msg);
     }
 }
 
-pub fn logd(msg: &str) {
+pub fn log_d(msg: &str) {
     unsafe {
         let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper logd called before init");
         oklogger.log_debug(msg);
     }
 }
 
-pub fn logo(msg: &str) {
+pub fn log_o(msg: &str) {
     unsafe {
         let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper logo called before init");
         oklogger.log_other(msg);
     }
 }
 
-pub fn config(enable_i: bool, enable_e: bool, enable_d: bool, enable_o: bool) {
+pub fn log_config(enable_i: bool, enable_e: bool, enable_d: bool, enable_o: bool) {
     unsafe {
         let oklogger = THELOGGER.as_mut().expect("ERRR:LoggerK:Direct helper config called before init");
         oklogger.config_info(enable_i);
