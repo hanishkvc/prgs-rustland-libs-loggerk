@@ -6,11 +6,15 @@
 //! HanishKVC, 2022
 //!
 
+
 trait Logger {
     fn log_normal(&self, msg: &str);
     fn log_error(&self, msg: &str);
     fn log_debug(&self, msg: &str);
 }
+
+mod console;
+
 
 
 #[cfg(test)]
