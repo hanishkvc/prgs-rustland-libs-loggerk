@@ -12,9 +12,17 @@
 
 
 trait Logger {
+
     fn log_info(&self, msg: &str);
     fn log_error(&self, msg: &str);
     fn log_debug(&self, msg: &str);
+
+    //fn config_force_allto_error(&self);
+
+    fn config_info(&mut self, enable: bool);
+    fn config_error(&mut self, enable: bool);
+    fn config_debug(&mut self, enable: bool);
+
 }
 
 mod console;
@@ -49,6 +57,15 @@ pub fn logd(msg: &str) {
     unsafe {
         let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper logd called before init");
         oklogger.log_debug(msg);
+    }
+}
+
+pub fn config(enable_i: bool, enable_e: bool, enable_d: bool) {
+    unsafe {
+        let oklogger = THELOGGER.as_mut().expect("ERRR:LoggerK:Direct helper logd called before init");
+        oklogger.config_info(enable_i);
+        oklogger.config_error(enable_e);
+        oklogger.config_debug(enable_d);
     }
 }
 
