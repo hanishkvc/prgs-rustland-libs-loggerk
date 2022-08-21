@@ -9,6 +9,7 @@ pub struct ConsoleLogger {
     binfo: bool,
     berror: bool,
     bdebug: bool,
+    bother: bool,
 }
 
 impl ConsoleLogger {
@@ -17,6 +18,7 @@ impl ConsoleLogger {
             binfo: true,
             berror: true,
             bdebug: true,
+            bother: true,
         }
     }
 }
@@ -53,6 +55,17 @@ impl crate::Logger for ConsoleLogger {
 
     fn config_debug(&mut self, enable: bool) {
         self.bdebug = enable;
+    }
+
+    fn log_other(&self, msg: &str) {
+        if !self.bother {
+            return;
+        }
+        eprintln!("{}", msg);
+    }
+
+    fn config_other(&mut self, enable: bool) {
+        self.bother = enable;
     }
 
 }
