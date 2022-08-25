@@ -16,6 +16,7 @@ trait Logger {
 
     fn log_info(&self, msg: &str);
     fn log_error(&self, msg: &str);
+    fn log_warn(&self, msg: &str);
     fn log_debug(&self, msg: &str);
     fn log_other(&self, msg: &str);
 
@@ -23,6 +24,7 @@ trait Logger {
 
     fn config_info(&mut self, enable: bool);
     fn config_error(&mut self, enable: bool);
+    fn config_warn(&mut self, enable: bool);
     fn config_debug(&mut self, enable: bool);
     fn config_other(&mut self, enable: bool);
 
@@ -56,6 +58,13 @@ pub fn log_e(msg: &str) {
     }
 }
 
+pub fn log_w(msg: &str) {
+    unsafe {
+        let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper logw called before init");
+        oklogger.log_warn(msg);
+    }
+}
+
 pub fn log_d(msg: &str) {
     unsafe {
         let oklogger = THELOGGER.as_ref().expect("ERRR:LoggerK:Direct helper logd called before init");
@@ -70,11 +79,12 @@ pub fn log_o(msg: &str) {
     }
 }
 
-pub fn log_config(enable_i: bool, enable_e: bool, enable_d: bool, enable_o: bool) {
+pub fn log_config(enable_i: bool, enable_e: bool, enable_w: bool, enable_d: bool, enable_o: bool) {
     unsafe {
         let oklogger = THELOGGER.as_mut().expect("ERRR:LoggerK:Direct helper config called before init");
         oklogger.config_info(enable_i);
         oklogger.config_error(enable_e);
+        oklogger.config_warn(enable_w);
         oklogger.config_debug(enable_d);
         oklogger.config_other(enable_o);
     }

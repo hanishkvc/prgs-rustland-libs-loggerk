@@ -1,13 +1,14 @@
 //!
 //! THe core log logic
 //! May or may not be thread safe
-//&!
+//!
 //! HanishKVC, 2022
 //!
 
 pub struct ConsoleLogger {
     binfo: bool,
     berror: bool,
+    bwarn: bool,
     bdebug: bool,
     bother: bool,
 }
@@ -17,6 +18,7 @@ impl ConsoleLogger {
         ConsoleLogger {
             binfo: true,
             berror: true,
+            bwarn: true,
             bdebug: true,
             bother: true,
         }
@@ -38,6 +40,13 @@ impl crate::Logger for ConsoleLogger {
         eprintln!("{}", msg);
     }
 
+    fn log_warn(&self, msg: &str) {
+        if !self.bwarn {
+            return;
+        }
+        eprintln!("{}", msg);
+    }
+
     fn log_debug(&self, msg: &str) {
         if !self.bdebug {
             return;
@@ -51,6 +60,10 @@ impl crate::Logger for ConsoleLogger {
 
     fn config_error(&mut self, enable: bool) {
         self.berror = enable;
+    }
+
+    fn config_warn(&mut self, enable: bool) {
+        self.bwarn = enable;
     }
 
     fn config_debug(&mut self, enable: bool) {
