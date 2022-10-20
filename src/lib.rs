@@ -12,6 +12,20 @@
 //!
 
 
+#[macro_export]
+///
+/// Log the passed string message through log_d, only if in debug build.
+/// Avoid generating corresponding code, if in release build.
+///
+macro_rules! ldebug {
+    ($($got:tt)*) => {
+       if cfg!(debug_assertions) {
+        log_d($($got)*)
+       }
+    };
+}
+
+
 trait Logger {
 
     fn log_info(&self, msg: &str);
