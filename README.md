@@ -4,7 +4,7 @@ Auther: HanishKVC
 
 Version: 20220825IST0644
 
-License: GPL
+License: LGPL-3.0+
 
 ## Overview
 
